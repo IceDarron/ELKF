@@ -1,6 +1,5 @@
 # ELKF
-ELKF简介
-===
+#### ELKF简介
 ELKF是 Elasticsearch + Logstash + Kibana + FileBeat 四个组件的组合。本文版本为6.5.4，简单介绍一些概念，架构等。
 
 首先介绍一下，elastic。官网（https://www.elastic.co/）。elastic公司最早最出名的产品应该是elasticsearch（简称es）。
@@ -46,3 +45,39 @@ Kibana：
 + 存储－如何存储日志数据
 + 分析－可以支持 UI 分析
 + 警告－能够提供错误报告，监控机制
+
+#### 架构图
+
+ELKF架构可以根据实际情况自行搭配，可以只是用ELK，或者增加消息队列在L和E端。EL可以建成集群等。
+本次，搭建的架构如下（网上找的一张比较好的图，本人懒不爱画）：
+
+![Image text](https://github.com/IceDarron/ELKF/blob/master/Image/ELKF_Architecture.png)
+
+elasticsearch：
+
+![Image text](https://github.com/IceDarron/ELKF/blob/master/Image/elasticsearch_theory.png)
+
+logstash：
+
+![Image text](https://github.com/IceDarron/ELKF/blob/master/Image/logstash_theory.png)
+
+filebeat：
+
+![Image text](https://github.com/IceDarron/ELKF/blob/master/Image/filebeat_theory.png)
+
+#### 参考文献
+
++ logstash：https://blog.csdn.net/wfs1994/article/details/80862225
++ filebeat：https://www.cnblogs.com/aresxin/p/8035137.html
++ 部署：https://blog.csdn.net/fenglailea/article/details/52486471
++ 部署：https://segmentfault.com/a/1190000012858853
+
+#### 部署遇到的一些问题及解决方案
++ windows下，ELKF属于开箱即食的，基本只需要解压启动就好。
++ filebeat可以直接输出到es，这样可以在kibana的log下直接查看，是一个时序页面，更为清晰。
++ es在linux下部署，需要解决两个问题，一个是创建用户，另一个是调整linux各项参数，参考：https://blog.csdn.net/qq_33363618/article/details/78882827
++ ELKF参数配置最好参照官方文档配置，均使用yaml格式。
++ logstash配置参数时注意，logstash.yml是setting。logstash-sample.conf是config。测试情况下conf不需要配置，可以直接在控制台输入输出。如果要设置input源，则根据自己选择的源创建单独的config进行配置。例如，如果修改logstah的ip port需要在logstash.yml（setting）配置。如果需要配置filebeat则，创建filebeat-logstash.conf，编写input filter output。
++ 注意启动书序，es --》 logstash --》 filebeat，kibana在es启动之后即可。建议如此顺序，减少不必要日志报错。顺序错，不会影响数据等。
+
+#### 启动和停止命令
