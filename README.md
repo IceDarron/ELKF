@@ -81,3 +81,9 @@ filebeat：
 + 注意启动书序，es --》 logstash --》 filebeat，kibana在es启动之后即可。建议如此顺序，减少不必要日志报错。顺序错，不会影响数据等。
 
 #### 启动和停止命令
+
++ nohup ./elasticsearch &
++ nohup ./logstash -f ../config/filebeat-logstash.conf --config.reload.automatic &
++ nohup ./filebeat -e -c filebeat.yml &
++ nohup ./kibana &
++ kill -9 杀进程
