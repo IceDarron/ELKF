@@ -80,6 +80,9 @@ filebeat：
 + logstash配置参数时注意，logstash.yml是setting。logstash-sample.conf是config。测试情况下conf不需要配置，可以直接在控制台输入输出。如果要设置input源，则根据自己选择的源创建单独的config进行配置。例如，如果修改logstah的ip port需要在logstash.yml（setting）配置。如果需要配置filebeat则，创建filebeat-logstash.conf，编写input filter output。
 + 注意启动书序，es --》 logstash --》 filebeat，kibana在es启动之后即可。建议如此顺序，减少不必要日志报错。顺序错，不会影响数据等。
 + filebeat探测器会收集/var/log/*.log的所有匹配文件，这意味这filebeat会收集所有的/var/log下以.log结尾的文件，此处还支持Golang Glob支持的所有模式。在预定义级别的子目录中获取所有文件，可以使用这个配置：/var/log/*/*.log，这会找到/var/log下所有子目录中所有的以.log结尾的文件。但它并不会找到/var/log文件夹下的以.log结尾的文件。现在它还不能递归的在所有子目录中获取所有的日志文件。参考：http://www.cnblogs.com/kerwinC/p/6227768.html
++ linux下直接使用wget下载jdk，由于协议问题，虽然下载但是不能解压。使用如下指令下载：
+  wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn-pub/java/jdk/8u202-b08/1961070e4c9b4e26a04e7f5a083f551e/jdk-8u202-linux-x64.tar.gz
+  
 
 #### 启动和停止命令
 
